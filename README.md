@@ -135,10 +135,6 @@ The admin panel allows you to:
 3. Set all required environment variables
 4. Deploy with the build command `npm install` and start command `npm run server`
 
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ## 🙏 Acknowledgements
 
 - [React Documentation](https://reactjs.org/docs/getting-started.html)
