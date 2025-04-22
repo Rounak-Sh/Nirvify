@@ -15,17 +15,36 @@ const port = process.env.PORT || 3000;
 connectDB();
 connectCloudinary();
 
+// CORS configuration with explicit origins for Vercel deployment
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://nirvify.onrender.com",
+  "https://nirvify.vercel.app",
+  "https://nirvify-git-main-rounaqsh-gmailcoms-projects.vercel.app",
+  "https://nirvify-kun98qj19-rounaqsh-gmailcoms-projects.vercel.app",
+];
+
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: process.env.ALLOWED_ORIGINS
-      ? process.env.ALLOWED_ORIGINS.split(",")
-      : ["http://localhost:5173"],
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps, curl requests)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
+
+// Handle preflight requests
+app.options("*", cors());
 
 // Routes
 app.use("/auth", userRoutes);
