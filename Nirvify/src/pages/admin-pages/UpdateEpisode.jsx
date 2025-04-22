@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { assets } from "../../assets/assets";
+import API_URL from "../../config/api.js";
 
 const UpdateEpisode = () => {
   const { id } = useParams();
@@ -27,9 +28,7 @@ const UpdateEpisode = () => {
   useEffect(() => {
     const fetchPodcasts = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/podcast/list-podcast"
-        );
+        const response = await axios.get(`${API_URL}/api/podcast/list-podcast`);
         setPodcasts(response.data.podcasts);
       } catch (error) {
         console.error("Error fetching podcasts:", error);
@@ -38,10 +37,10 @@ const UpdateEpisode = () => {
 
     const fetchEpisode = async () => {
       try {
-        const { data } = await axios.get(
-          `http://localhost:3000/api/episode/list-episode`
+        const response = await axios.get(`${API_URL}/api/episode/list-episode`);
+        const selectedEpisode = response.data.allEpisodes.find(
+          (e) => e._id === id
         );
-        const selectedEpisode = data.allEpisodes.find((e) => e._id === id);
         if (selectedEpisode) {
           setEpisode({
             ...selectedEpisode,
@@ -105,10 +104,7 @@ const UpdateEpisode = () => {
       if (imageFile) formData.append("image", imageFile);
       if (audioFile) formData.append("audio", audioFile);
 
-      await axios.put(
-        `http://localhost:3000/api/episode/update/${id}`,
-        formData
-      );
+      await axios.put(`${API_URL}/api/episode/update/${id}`, formData);
 
       setShowAlert(true);
     } catch (error) {

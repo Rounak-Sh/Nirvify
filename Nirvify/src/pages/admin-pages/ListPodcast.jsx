@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import API_URL from "../../config/api.js";
 
 const ListPodcast = () => {
   const [podcasts, setPodcasts] = useState([]);
@@ -10,9 +11,7 @@ const ListPodcast = () => {
   useEffect(() => {
     const fetchPodcasts = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/podcast/list-podcast"
-        );
+        const response = await axios.get(`${API_URL}/api/podcast/list-podcast`);
         setPodcasts(response.data.podcasts);
       } catch (error) {
         console.error("Error fetching podcasts:", error);
@@ -37,9 +36,7 @@ const ListPodcast = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(
-        `http://localhost:3000/api/podcast/${selectedPodcast._id}`
-      );
+      await axios.delete(`${API_URL}/api/podcast/${selectedPodcast._id}`);
       setPodcasts((prev) =>
         prev.filter((podcast) => podcast._id !== selectedPodcast._id)
       );

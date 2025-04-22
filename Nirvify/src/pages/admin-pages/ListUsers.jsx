@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import API_URL from "../../config/api.js";
 
 const ListUsers = () => {
   const [users, setUsers] = useState([]);
@@ -11,7 +12,7 @@ const ListUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/auth/users");
+        const response = await axios.get(`${API_URL}/auth/users`);
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -33,7 +34,7 @@ const ListUsers = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3000/auth/users/${selectedUserId}`);
+      await axios.delete(`${API_URL}/auth/users/${selectedUserId}`);
       setUsers(users.filter((user) => user._id !== selectedUserId));
       closeBanner();
       setShowAlert(true);

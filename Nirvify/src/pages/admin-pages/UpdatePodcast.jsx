@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { assets } from "../../assets/assets";
+import API_URL from "../../config/api.js";
 
 const UpdatePodcast = () => {
   const { id } = useParams();
@@ -21,10 +22,10 @@ const UpdatePodcast = () => {
   useEffect(() => {
     const fetchPodcast = async () => {
       try {
-        const { data } = await axios.get(
-          `http://localhost:3000/api/podcast/list-podcast`
+        const response = await axios.get(`${API_URL}/api/podcast/list-podcast`);
+        const selectedPodcast = response.data.podcasts.find(
+          (p) => p._id === id
         );
-        const selectedPodcast = data.podcasts.find((p) => p._id === id);
         if (selectedPodcast) {
           setPodcast(selectedPodcast);
           setPreviewImage(selectedPodcast.image);
@@ -54,12 +55,10 @@ const UpdatePodcast = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      !podcast.name.trim() ||
-      !podcast.podcasterName.trim() ||
-      !podcast.desc.trim()
-    ) {
-      setMessage("All fields are required.");
+    if (!podcast.name || !podcast.podcasterName || !podcast.desc) {
+      setMessage(
+        "All fields are required except image if you don't want to change it."
+      );
       return;
     }
 
@@ -68,17 +67,16 @@ const UpdatePodcast = () => {
       formData.append("name", podcast.name);
       formData.append("podcasterName", podcast.podcasterName);
       formData.append("desc", podcast.desc);
-      if (podcastImage) formData.append("image", podcastImage);
+      if (podcastImage) {
+        formData.append("image", podcastImage);
+      }
 
-      await axios.put(
-        `http://localhost:3000/api/podcast/update/${id}`,
-        formData
-      );
+      await axios.put(`${API_URL}/api/podcast/update/${id}`, formData);
 
       setShowAlert(true);
     } catch (error) {
+      setMessage("Error updating podcast. Please try again.");
       console.error("Error updating podcast:", error);
-      setMessage("Failed to update the podcast.");
     }
   };
 
