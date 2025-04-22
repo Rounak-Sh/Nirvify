@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
+import {
+  EyeIcon,
+  EyeSlashIcon,
+  InformationCircleIcon,
+} from "@heroicons/react/24/solid";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { NavLink, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
@@ -11,6 +15,7 @@ const Login = ({ setIsLoggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [showAdminHint, setShowAdminHint] = useState(false);
 
   const navigate = useNavigate();
 
@@ -48,6 +53,10 @@ const Login = ({ setIsLoggedIn }) => {
       setMessage(error.response?.data.message || "Invalid login credentials");
       console.log(error);
     }
+  };
+
+  const toggleAdminHint = () => {
+    setShowAdminHint(!showAdminHint);
   };
 
   return (
@@ -133,16 +142,40 @@ const Login = ({ setIsLoggedIn }) => {
             Sign up for Nirvify.
           </NavLink>
         </div>
+
+        {/* Admin Hint Section */}
+        <div className="mt-4 text-center relative">
+          <button
+            onClick={toggleAdminHint}
+            className="text-gray-400 hover:text-white flex items-center justify-center mx-auto">
+            <InformationCircleIcon className="h-5 w-5 mr-1" />
+            <span className="text-xs">Admin Access</span>
+          </button>
+
+          {showAdminHint && (
+            <div className="mt-2 p-3 bg-gray-800 rounded-md text-xs animate-fade-in">
+              <p className="font-semibold text-bianchigreen_dark mb-1">
+                Admin Credentials:
+              </p>
+              <p>
+                Email: <span className="text-white">admin@nirvify.com</span>
+              </p>
+              <p>
+                Password: <span className="text-white">admin123</span>
+              </p>
+            </div>
+          )}
+        </div>
       </div>
 
       <footer className="w-full text-center text-xs text-zinc-400 mt-8">
         <p>
           This site is protected by reCAPTCHA and the Google
-          <a href="#" className="underline text-white">
+          <a href="#" className="underline text-white ml-1">
             Privacy Policy
           </a>
           an
-          <a href="#" className="underline text-white">
+          <a href="#" className="underline text-white ml-1">
             Terms of Service
           </a>
           apply.
