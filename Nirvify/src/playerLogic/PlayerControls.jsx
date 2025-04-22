@@ -1,5 +1,6 @@
 import { createContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
+import API_URL from "../config/api.js";
 
 export const PlayerControl = createContext();
 
@@ -81,9 +82,7 @@ const PlayerControlProvider = (props) => {
 
   const getPodcastData = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:3000/api/podcast/list-podcast"
-      );
+      const response = await axios.get(`${API_URL}/api/podcast/list-podcast`);
       setPodcastData(response.data.podcasts || []);
     } catch (error) {
       console.error("Error fetching podcasts:", error);
@@ -92,9 +91,7 @@ const PlayerControlProvider = (props) => {
 
   const getEpisodeData = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:3000/api/episode/list-episode"
-      );
+      const response = await axios.get(`${API_URL}/api/episode/list-episode`);
       setEpisodeData(response.data.allEpisodes || []);
     } catch (error) {
       console.error("Error fetching episodes:", error);

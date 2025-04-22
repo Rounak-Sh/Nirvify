@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import API_URL from "../../config/api.js";
 
 const ListEpisode = () => {
   const [episodes, setEpisodes] = useState([]);
@@ -11,9 +12,7 @@ const ListEpisode = () => {
   useEffect(() => {
     const fetchEpisodes = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/episode/list-episode"
-        );
+        const response = await axios.get(`${API_URL}/api/episode/list-episode`);
         setEpisodes(response.data.allEpisodes || []);
       } catch (error) {
         console.error("Error fetching episodes:", error);
@@ -39,9 +38,7 @@ const ListEpisode = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(
-        `http://localhost:3000/api/episode/${selectedEpisode._id}`
-      );
+      await axios.delete(`${API_URL}/api/episode/${selectedEpisode._id}`);
       setEpisodes((prev) =>
         prev.filter((ep) => ep._id !== selectedEpisode._id)
       );

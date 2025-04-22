@@ -3,10 +3,7 @@ import mongoose from "mongoose";
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.DB, {
-      // These options help with MongoDB Atlas connections
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      // Set retryWrites and w options for Atlas compatibility
+      // Only keep necessary options for MongoDB Atlas
       retryWrites: true,
       w: "majority",
     });

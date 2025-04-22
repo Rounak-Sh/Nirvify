@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { assets } from "../../assets/assets";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import API_URL from "../../config/api.js";
 
 const AddPodcast = () => {
   const [podcastName, setPodcastName] = useState("");
@@ -37,10 +38,7 @@ const AddPodcast = () => {
       formData.append("desc", podcastDesc);
       formData.append("image", podcastImage);
 
-      await axios.post(
-        "http://localhost:3000/api/podcast/add-podcast",
-        formData
-      );
+      await axios.post(`${API_URL}/api/podcast/add-podcast`, formData);
 
       setShowAlert(true);
 

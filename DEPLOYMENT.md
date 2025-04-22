@@ -2,6 +2,11 @@
 
 This document provides instructions for deploying the Nirvify application to Render (backend) and Vercel (frontend).
 
+## Deployment Status
+
+- Backend: Deployed at [https://nirvify.onrender.com](https://nirvify.onrender.com)
+- Frontend: Pending deployment on Vercel
+
 ## Prerequisites
 
 1. GitHub account
@@ -59,25 +64,7 @@ Important notes for MongoDB Atlas:
    - `ALLOWED_ORIGINS`: Comma-separated list of allowed origins, including your Vercel frontend URL
 6. Click "Create Web Service"
 
-## Step 3: Create Admin User
-
-After deploying your backend, you need to create an admin user to upload content.
-
-1. SSH into your Render service or run locally with your production environment variables set:
-
-   ```
-   npm run create-admin
-   ```
-
-2. This will create an admin user with these credentials:
-
-   - Email: admin@nirvify.com
-   - Password: admin123
-   - Role: admin
-
-3. You can now log in with these credentials to upload podcasts and episodes.
-
-## Step 4: Deploy Frontend to Vercel
+## Step 3: Deploy Frontend to Vercel
 
 1. Log in to Vercel.
 2. Create a new project.
@@ -85,17 +72,19 @@ After deploying your backend, you need to create an admin user to upload content
 4. Configure the following settings:
    - Framework Preset: `Vite`
 5. Add the following environment variables:
-   - `VITE_API_URL`: The URL of your Render backend service (e.g., https://nirvify-backend.onrender.com)
+   - `VITE_API_URL`: https://nirvify.onrender.com
 6. Click "Deploy"
 
-## Step 5: Update CORS Configuration
+## Step 4: Update CORS Configuration
 
 After deployment, make sure the backend's `ALLOWED_ORIGINS` environment variable includes your Vercel frontend URL.
 
-## Step 6: Test the Deployment
+## Step 5: Test the Deployment
 
 1. Open your Vercel-deployed frontend URL in a browser.
-2. Test logging in and other functionalities to ensure everything works correctly.
+2. Test logging in with the admin credentials (email: admin@nirvify.com, password: admin123).
+3. Upload podcasts and episodes using the admin interface.
+4. Test the user interface for browsing and playing podcasts.
 
 ## Troubleshooting
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { assets } from "../../assets/assets";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import API_URL from "../../config/api.js";
 
 const AddEpisode = () => {
   const [podcasts, setPodcasts] = useState([]);
@@ -42,7 +43,7 @@ const AddEpisode = () => {
       formData.append("episodeNo", episodeNo);
 
       const response = await axios.post(
-        "http://localhost:3000/api/episode/add-episode",
+        `${API_URL}/api/episode/add-episode`,
         formData
       );
 
@@ -78,9 +79,7 @@ const AddEpisode = () => {
   useEffect(() => {
     const fetchPodcasts = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/podcast/list-podcast"
-        );
+        const response = await axios.get(`${API_URL}/api/podcast/list-podcast`);
         setPodcasts(response.data.podcasts);
       } catch (error) {
         console.error("Error fetching podcasts:", error);

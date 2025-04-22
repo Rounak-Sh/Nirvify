@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { PlayerControl } from "../playerLogic/PlayerControls";
+import API_URL from "../config/api.js";
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
 
   const handleLogout = () => {
     axios
-      .get("http://localhost:3000/auth/logout")
+      .get(`${API_URL}/auth/logout`)
       .then((res) => {
         if (res.data.status) {
           localStorage.setItem("isLoggedIn", "false");
